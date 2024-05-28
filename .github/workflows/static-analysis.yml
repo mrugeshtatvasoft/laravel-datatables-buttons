@@ -1,0 +1,51 @@
+name: "Static Analysis"
+
+on:
+  push:
+    paths:
+      - .github/workflows/static-analysis.yml
+      - composer.*
+      - phpstan.neon.dist
+      - src/**
+      - tests/**
+
+  pull_request:
+    paths:
+      - .github/workflows/static-analysis.yml
+      - composer.*
+      - phpstan.neon.dist
+      - src/**
+      - tests/**
+
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  static-analysis-phpstan:
+    name: "Static Analysis with PHPStan"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: [8.2, 8.3]
+
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v4"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "${{ matrix.php-version }}"
+          tools: "cs2pr"
+
+      - name: Install dependencies
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+
+      - name: Execute type checking
+        run: vendor/bin/phpstan --configuration="phpstan.neon.dist"

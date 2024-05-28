@@ -1,0 +1,19 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - src
+
+    level: max
+
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\).#'
+        - '#Command "datatables:html" does not have option*#'
+
+    excludePaths:
+
+    checkMissingIterableValueType: false
+
+    checkGenericClassInNonGenericObjectType: false
