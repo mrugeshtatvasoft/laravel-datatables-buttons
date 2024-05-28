@@ -16,8 +16,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "mrugeshtatvasoft/laravel-datatables-oracle": "^11",
-        "mrugeshtatvasoft/laravel-datatables-html": "^11",
+        "mrugeshtatvasoft/laravel-datatables-oracle": "^1",
+        "mrugeshtatvasoft/laravel-datatables-html": "^1.1",
         "illuminate/console": "^11"
     },
     "require-dev": {
